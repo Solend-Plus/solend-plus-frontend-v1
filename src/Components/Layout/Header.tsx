@@ -26,7 +26,10 @@ const navLinkHeaderStyles: React.CSSProperties = {
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
 
-  let navigationLinks = [{ label: "Home", to: "/" }];
+  let navigationLinks = [
+    { label: "Home", to: "/" },
+    { label: "APY Dashboard", to: "/apy/dashboard" },
+  ];
 
   const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);

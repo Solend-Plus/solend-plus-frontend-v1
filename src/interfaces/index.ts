@@ -12,7 +12,14 @@ export interface IRawApyDataPoint {
   timestamp: string;
   data: {
     symbol: string;
-    supplyApy: number;
+    //!: to be replace by supplyApy for uniformity after api gets updated
+    supplyAPY: number;
     borrowApy: number;
   };
+}
+
+export interface IApyChartDataset {
+  labels: string[];
+  supplyData: number[];
+  borrowData: number[];
 }

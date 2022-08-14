@@ -9,7 +9,7 @@ import ApyChart from "../../../src/Components/ApyChart";
 
 const Dashboard: NextPage = ({}) => {
   const [selectedAssetSymbol, setSelectedAssetSymbol] =
-    React.useState<string>("");
+    React.useState<string>("SOL");
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setSelectedAssetSymbol(newValue);
@@ -19,7 +19,15 @@ const Dashboard: NextPage = ({}) => {
       <Head>
         <title>Dashboard</title>
       </Head>
-      <Box sx={{ width: "90%", typography: "body1" }}>
+      <Box
+        sx={{
+          width: "90%",
+          typography: "body1",
+          maxWidth: "60rem",
+          mx: "auto",
+          mt: 4,
+        }}
+      >
         <TabContext value={selectedAssetSymbol}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <TabList
@@ -40,7 +48,7 @@ const Dashboard: NextPage = ({}) => {
           <TabPanel value={`${selectedAssetSymbol}`}>
             <ApyChart
               symbol={selectedAssetSymbol}
-              from={"2022-08-12T10:50:11.000Z"}
+              from={"2022-08-13T12:00:11.000Z"}
               to={"2022-08-20T15:34:15.000Z"}
               interval={1}
             />

@@ -15,7 +15,7 @@ import {
 import { Line } from "react-chartjs-2";
 // import { useEffect } from "react";
 import solendPlusApi from "../axios-instances/solendPlusApi";
-import { IRawApyDataPoint } from "../interfaces";
+import { IRawApyDataPoint, IApyChartDataset } from "../interfaces";
 
 interface IApyChart {
   symbol: string;
@@ -46,13 +46,17 @@ const ApyChart = ({ symbol, from, to, interval }: IApyChart) => {
       },
       title: {
         display: true,
-        text: "Chart.js Line Chart",
+        text: "APY Dashboard",
       },
     },
   };
 
   const { supplyData, borrowData, labels } = useMemo(() => {
-    const initialValue = { supplyData: [], borrowData: [], labels: [] };
+    const initialValue: IApyChartDataset = {
+      supplyData: [],
+      borrowData: [],
+      labels: [],
+    };
 
     if (_.isNil(apyHistory) || _.isEmpty(apyHistory)) {
       return initialValue;
