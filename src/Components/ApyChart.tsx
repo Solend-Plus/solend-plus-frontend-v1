@@ -64,8 +64,7 @@ const ApyChart = ({ symbol, from, to, interval }: IApyChart) => {
       const day = dataPointTimeStamp.getDate();
       const hour = dataPointTimeStamp.getHours();
       const minute = dataPointTimeStamp.getMinutes();
-
-      acc.supplyData.push(current.data.supplyApy * 100);
+      acc.supplyData.push(current.data.supplyAPY * 100);
       acc.borrowData.push(current.data.borrowApy * 100);
       acc.labels.push(`${month + 1}/${day} - ${hour}:${minute}`);
 
@@ -87,8 +86,8 @@ const ApyChart = ({ symbol, from, to, interval }: IApyChart) => {
         fill: true,
         label: `${symbol} borrow apy history`,
         data: borrowData,
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
+        borderColor: "rgb(252, 95, 95)",
+        backgroundColor: "rgba(252, 95, 95, 0.5)",
       },
     ],
   };
