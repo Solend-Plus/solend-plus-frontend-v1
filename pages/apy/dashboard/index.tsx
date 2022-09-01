@@ -1,15 +1,30 @@
 import { NextPage } from "next";
-import * as React from "react";
+import { useState, useEffect } from "react";
+import dayjs, { Dayjs } from "dayjs";
 import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import Head from "next/head";
 import { RESERVES } from "../../../src/Constants";
 import ApyChart from "../../../src/Components/ApyChart";
+import BasicDateRangePicker from "../../../src/Components/DateRangePicker";
+import IntervalSelect from "../../../src/Components/IntervalSelect";
 // import { useGeneralInfoContext } from "../../../src/Contexts/GeneralInfo";
 
 const Dashboard: NextPage = ({}) => {
-  const [selectedAssetSymbol, setSelectedAssetSymbol] =
-    React.useState<string>("SOL");
+  const [selectedAssetSymbol, setSelectedAssetSymbol] = useState<string>("SOL");
+
+  const [fromDate, setFromDate] = useState<Dayjs | null>();
+  const [toDate, setToDate] = useState<Dayjs | null>();
+  const [interval, setInterval] = useState<string>("24");
+
+  useEffect(() => {
+    const to = new Date();
+    const nowMilliseconds = to.getTime();
+    const from = new Date(nowMilliseconds - 10 * 24 * 3600 * 1000);
+
+    setToDate(dayjs(to.toISOString()));
+    setFromDate(dayjs(from.toISOString()));
+  }, []);
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setSelectedAssetSymbol(newValue);
@@ -28,6 +43,27 @@ const Dashboard: NextPage = ({}) => {
           mt: 4,
         }}
       >
+        <Box
+          sx={{
+            my: 2,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <BasicDateRangePicker
+            value={fromDate}
+            setValue={setFromDate}
+            label="from"
+          />
+          <BasicDateRangePicker
+            value={toDate}
+            setValue={setToDate}
+            label="to"
+          />
+
+          <IntervalSelect value={interval} setValue={setInterval} />
+        </Box>
         <TabContext value={selectedAssetSymbol}>
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <TabList
@@ -48,9 +84,9 @@ const Dashboard: NextPage = ({}) => {
           <TabPanel value={`${selectedAssetSymbol}`}>
             <ApyChart
               symbol={selectedAssetSymbol}
-              from={"2022-08-13T12:00:11.000Z"}
-              to={"2022-08-20T15:34:15.000Z"}
-              interval={1}
+              from={fromDate?.toISOString()}
+              to={toDate?.toISOString()}
+              interval={Number(interval)}
             />
           </TabPanel>
         </TabContext>

@@ -9,7 +9,12 @@ export interface IAsset {
 }
 
 export interface IRawApyDataPoint {
-  timestamp: string;
+  timestamp: {
+    year: number;
+    month: number;
+    day: number;
+    hour: number;
+  };
   data: {
     symbol: string;
     //!: to be replace by supplyApy for uniformity after api gets updated

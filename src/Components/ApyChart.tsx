@@ -19,8 +19,8 @@ import { IRawApyDataPoint, IApyChartDataset } from "../interfaces";
 
 interface IApyChart {
   symbol: string;
-  from: string;
-  to: string;
+  from: string | undefined;
+  to: string | undefined;
   interval: number;
 }
 
@@ -63,14 +63,31 @@ const ApyChart = ({ symbol, from, to, interval }: IApyChart) => {
     }
 
     return apyHistory.reduce((acc, current) => {
-      const dataPointTimeStamp = new Date(current.timestamp);
-      const month = dataPointTimeStamp.getMonth();
+      let dataPointTimeStamp = new Date(
+        current.timestamp.year,
+        current.timestamp.month - 1,
+        current.timestamp.day,
+        current.timestamp.hour
+      );
+
+      // offset in milliseconds
+      const timeZoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
+      console.log(
+        "🚀 ~ file: ApyChart.tsx ~ line 75 ~ returnapyHistory.reduce ~ timeZoneOffset",
+        timeZoneOffset
+      );
+
+      dataPointTimeStamp = new Date(
+        dataPointTimeStamp.getTime() - timeZoneOffset
+      );
+
+      const month = dataPointTimeStamp.getMonth() + 1;
       const day = dataPointTimeStamp.getDate();
       const hour = dataPointTimeStamp.getHours();
       const minute = dataPointTimeStamp.getMinutes();
       acc.supplyData.push(current.data.supplyAPY * 100);
       acc.borrowData.push(current.data.borrowApy * 100);
-      acc.labels.push(`${month + 1}/${day} - ${hour}:${minute}`);
+      acc.labels.push(`${month}/${day} - ${hour}:${minute}`);
 
       return acc;
     }, initialValue);
@@ -81,14 +98,14 @@ const ApyChart = ({ symbol, from, to, interval }: IApyChart) => {
     datasets: [
       {
         fill: true,
-        label: `${symbol} supply apy history`,
+        label: `Supply`,
         data: supplyData,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
       {
         fill: true,
-        label: `${symbol} borrow apy history`,
+        label: `Borrow`,
         data: borrowData,
         borderColor: "rgb(252, 95, 95)",
         backgroundColor: "rgba(252, 95, 95, 0.5)",
@@ -98,13 +115,15 @@ const ApyChart = ({ symbol, from, to, interval }: IApyChart) => {
 
   const apyHistoryFetcher = async (...args: any[]) => {
     try {
+      if (
+        (_.isNil(args[0]) || _.isNil(args[1]),
+        _.isNil(args[2]) || _.isNil(args[3]))
+      ) {
+        return [];
+      }
+
       const { data } = await solendPlusApi.get(
         `apy/${args[0]}?from=${args[1]}&to=${args[2]}&interval=${args[3]}`
-      );
-
-      console.log(
-        "🚀 ~ file: QuestionsTab.tsx ~ line 19 ~ courseQuestionsFetcher ~ data",
-        data
       );
 
       return data;

@@ -100,3 +100,35 @@ export const RESERVES = [
     logo: "https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/MERt85fc5boKw3BW1eYdxonEuJNvXbiMbs6hvheau5K/logo.png",
   },
 ];
+
+export const intervalOptions = [
+  {
+    label: "1 hour",
+    value: 1,
+  },
+  {
+    label: "4 hours",
+    value: 4,
+  },
+  {
+    label: "12 hours",
+    value: 12,
+  },
+  {
+    label: "Daily",
+    value: 24,
+  },
+  {
+    label: "Weekly",
+    value: 7 * 24,
+  },
+  {
+    label: "Monthly",
+    value: 30 * 7 * 24,
+  },
+
+  {
+    label: "Yearly",
+    value: 52 * 7 * 24,
+  },
+];
