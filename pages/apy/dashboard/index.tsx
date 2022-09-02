@@ -4,10 +4,10 @@ import dayjs, { Dayjs } from "dayjs";
 import { Box, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import Head from "next/head";
-import { RESERVES } from "../../../src/Constants";
-import ApyChart from "../../../src/Components/ApyChart";
-import BasicDateRangePicker from "../../../src/Components/DateRangePicker";
-import IntervalSelect from "../../../src/Components/IntervalSelect";
+import { RESERVES } from "../../../Constants";
+import ApyChart from "../../../Components/ApyChart";
+import BasicDateRangePicker from "../../../Components/DateRangePicker";
+import IntervalSelect from "../../../Components/IntervalSelect";
 // import { useGeneralInfoContext } from "../../../src/Contexts/GeneralInfo";
 
 const Dashboard: NextPage = ({}) => {
