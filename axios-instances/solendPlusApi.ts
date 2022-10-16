@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 const solendPlusApi = Axios.create({
-  baseURL: "https://solend-plus.azurewebsites.net/",
+  baseURL: "https://nodejs-solend-plus-api.herokuapp.com/",
   headers: {
     "Content-Type": "application/json",
     // Connection: "Keep-Alive",
